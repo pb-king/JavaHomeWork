@@ -42,7 +42,6 @@ public class Calculator {
         if (resultText.equals("")) {
             resultText = String.valueOf(resultValue);
         }
-
         System.out.println("Результат арифметической операции: " + resultText);
     }
 }
