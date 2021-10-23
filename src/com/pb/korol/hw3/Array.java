@@ -1,5 +1,6 @@
 package com.pb.korol.hw3;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Array {
@@ -10,7 +11,7 @@ public class Array {
         Scanner console = new Scanner(System.in);
 
         for (int i = 0; i < arrayLength; i++) {
-            System.out.print("Введите " + (i + 1) + "-й элемент массива: ");
+            System.out.printf("Введите %d-й элемент массива: ", (i + 1));
             array[i] = console.nextInt();
 
             if (array[i] > 0) {
@@ -21,9 +22,7 @@ public class Array {
 
         System.out.println();
         System.out.println("Введенный массив:");
-        for (int i = 0; i < arrayLength; i++) {
-            System.out.print(" " + array[i]);
-        }
+        System.out.println(Arrays.toString(array));
 
         System.out.println();
         System.out.println("Сумма всех элементов массива: " + sumOfElements);
@@ -41,8 +40,6 @@ public class Array {
 
         System.out.println();
         System.out.println("Массив после сортировки:");
-        for (int i = 0; i < arrayLength; i++) {
-            System.out.print(" " + array[i]);
-        }
+        System.out.println(Arrays.toString(array));
     }
 }
