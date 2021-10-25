@@ -17,32 +17,19 @@ public class CapitalLetter {
 
     public static String toProperCase(String text) {
         char[] textArray = text.toCharArray();
-        String prevType = "separator";
+        final String separators = " \t,.!?\"";
+        boolean prevCharIsSeparator = true;
 
         for (int i = 0; i < textArray.length; i++) {
             char curChar = textArray[i];
-            String curType = charType(curChar);
 
-            if (curType.equals("lowercase") && prevType.equals("separator")) {
+            if (Character.isLowerCase(curChar) && prevCharIsSeparator) {
                 textArray[i] = Character.toUpperCase(curChar);
             }
-            prevType = curType;
+
+            prevCharIsSeparator = (separators.indexOf(curChar) != -1);
         }
 
         return String.valueOf(textArray);
-    }
-
-    public static String charType(char symbol) {
-        final String separators = " \t,.!?\"";
-
-        if (separators.indexOf(symbol) != -1) {
-            return "separator";
-        }
-        else if (Character.isLowerCase(symbol)) {
-            return "lowercase";
-        }
-        else {
-            return "other";
-        }
     }
 }
