@@ -1,6 +1,6 @@
 package com.pb.korol.hw4;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Anagram {
@@ -19,21 +19,60 @@ public class Anagram {
     }
 
     public static boolean isAnagram(String string1, String string2) {
-        // анаграммы нечувствительны к регистру, поэтому приведем строки в lowercase
         string1 = string1.toLowerCase();
         string2 = string2.toLowerCase();
-        // сохраняем в ArrayList все буквы строки 1
-        ArrayList<Character> letters1 = getLetters(string1);
-        // перебираем все символы строки 2
+        char[] chars1 = string1.toCharArray();
+        int lettersLeft = 0;
+
+        for (int i = 0; i < string1.length(); i++) {
+            if (Character.isLetter(string1.charAt(i))) {
+                lettersLeft++;
+            }
+        }
+
         for (int i = 0; i < string2.length(); i++) {
             char symbol = string2.charAt(i);
-            // если встречена буква, ищем ее в списке букв строки 1
+
             if (Character.isLetter(symbol)) {
-                int index = letters1.indexOf(symbol);
-                // если не нашли, сходу не анаграмма
+                int index = findChar(chars1, symbol);
+                // если буква строки 2 не найдена в строке 1 - это не анаграмма
                 if (index == -1) {
                     return false;
-                } // иначе удаляем найденную букву из списка букв строки 1
+                }
+                else {
+                    chars1[index] = ' ';
+                    lettersLeft--;
+                }
+            }
+        }
+        // если после перебора строки 2 остались еще буквы строки 1 - это не анаграмма
+        return lettersLeft == 0;
+    }
+
+    public static int findChar(char[] charArray, char symbol) {
+        for (int i = 0; i < charArray.length; i++) {
+            if (charArray[i] == symbol) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /*
+    public static boolean isAnagram(String string1, String string2) {
+        string1 = string1.toLowerCase();
+        string2 = string2.toLowerCase();
+        ArrayList<Character> letters1 = getLetters(string1);
+
+        for (int i = 0; i < string2.length(); i++) {
+            char symbol = string2.charAt(i);
+
+            if (Character.isLetter(symbol)) {
+                int index = letters1.indexOf(symbol);
+                // если буква строки 2 не найдена в строке 1 - это не анаграмма
+                if (index == -1) {
+                    return false;
+                }
                 else {
                     letters1.remove(index);
                 }
@@ -53,4 +92,5 @@ public class Anagram {
         }
         return letters;
     }
+    */
 }
