@@ -14,33 +14,21 @@ public class Veterinarian {
     }
 
     public void treatAnimal(Animal animal) {
+        String species = animal.getSpecies();
         System.out.println();
-        System.out.print("Прием пациента №" + (animalsTreated + 1) + ". Это ");
+        System.out.println("Прием пациента №" + (animalsTreated + 1) + ". Это " + species + ".");
+        System.out.println("Любимая еда - " + animal.getFood() + ", место жительства - " + animal.getLocation() + ".");
 
-        if (animal instanceof Cat) {
-            System.out.println("кошка.");
-            Cat cat = (Cat) animal;
-            cat.sleep();
+        switch (species) {
+            case "кошка":
+                animal.sleep();
+                break;
+            case "собака":
+                animal.makeNoise();
+                break;
+            default:
+                animal.eat();
         }
-        else
-        if (animal instanceof Dog) {
-            System.out.println("собака.");
-            Dog dog = (Dog) animal;
-            dog.makeNoise();
-        }
-        else
-        if (animal instanceof Horse)  {
-            System.out.println("лошадь.");
-            Horse horse = (Horse) animal;
-            horse.eat();
-        }
-        else {
-            System.out.println("неизвестное доктору животное.");
-            animal.eat();
-        }
-        System.out.println("Любимая еда - " + animal.getFood() +
-                ", место жительства - " + animal.getLocation() + ".");
         animalsTreated++;
     }
-
 }

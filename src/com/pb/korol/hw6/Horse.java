@@ -11,6 +11,11 @@ public class Horse extends Animal {
     }
 
     @Override
+    public String getSpecies() {
+        return "лошадь";
+    }
+
+    @Override
     public void makeNoise() {
         System.out.println("Лошадь ржет.");
     }

@@ -11,6 +11,11 @@ public class Dog extends Animal{
     }
 
     @Override
+    public String getSpecies() {
+        return "собака";
+    }
+
+    @Override
     public void makeNoise() {
         System.out.println("Собака лает: " + barkSound + "!");
     }

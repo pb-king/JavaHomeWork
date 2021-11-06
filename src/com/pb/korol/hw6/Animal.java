@@ -9,6 +9,10 @@ public class Animal {
         this.location = location;
     }
 
+    public String getSpecies() {
+        return "какое-то животное";
+    }
+
     public void makeNoise() {
         System.out.println("Животное издает какой-то звук.");
     }
