@@ -13,13 +13,20 @@ public class Veterinarian {
         return name;
     }
 
+    private String identifyAnimal(Animal animal) {
+        if (animal instanceof Cat) return "кошка";
+        if (animal instanceof Dog) return "собака";
+        if (animal instanceof Horse) return "лошадь";
+        return "неизвестное доктору животное";
+    }
+
     public void treatAnimal(Animal animal) {
-        String species = animal.getSpecies();
+        String animalType = identifyAnimal(animal);
         System.out.println();
-        System.out.println("Прием пациента №" + (animalsTreated + 1) + ". Это " + species + ".");
+        System.out.println("Прием пациента №" + (animalsTreated + 1) + ". Это " + animalType + ".");
         System.out.println("Любимая еда - " + animal.getFood() + ", место жительства - " + animal.getLocation() + ".");
 
-        switch (species) {
+        switch (animalType) {
             case "кошка":
                 animal.sleep();
                 break;
