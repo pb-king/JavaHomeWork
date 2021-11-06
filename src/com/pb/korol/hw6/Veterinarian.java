@@ -36,7 +36,7 @@ public class Veterinarian {
         }
         else {
             System.out.println("неизвестное доктору животное.");
-            animal.makeNoise();
+            animal.eat();
         }
         System.out.println("Любимая еда - " + animal.getFood() +
                 ", место жительства - " + animal.getLocation() + ".");
