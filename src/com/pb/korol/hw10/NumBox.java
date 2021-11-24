@@ -15,16 +15,16 @@ public class NumBox<T extends Number> {
 
     public void add(T num) throws NumBoxOutOfSizeException {
         if (length >= size) {
-            throw new NumBoxOutOfSizeException();
+            throw new NumBoxOutOfSizeException(size);
         }
         values[length] = num;
         sum += num.doubleValue();
         length++;
     }
 
-    public T get(int index) {
-        if (index < 0 || index >= this.length) {
-            return null;
+    public T get(int index) throws NumBoxOutOfBoundsException {
+        if (index < 0 || index >= length) {
+            throw new NumBoxOutOfBoundsException(length - 1);
         }
         return values[index];
     }
@@ -34,9 +34,7 @@ public class NumBox<T extends Number> {
     }
 
     public double average() throws NumBoxIsEmptyException {
-        if (length == 0) {
-            throw new NumBoxIsEmptyException();
-        }
+        if (length == 0) { throw new NumBoxIsEmptyException(); }
         return sum / length;
     }
 
@@ -44,17 +42,42 @@ public class NumBox<T extends Number> {
         return sum;
     }
 
-    public T max() {
-        if (length == 0) {
-            return null;
-        }
+    public T max() throws NumBoxIsEmptyException {
+        if (length == 0) { throw new NumBoxIsEmptyException(); }
         T maxValue = values[0];
 
-        for (T number: values) {
-            if (number.doubleValue() > maxValue.doubleValue()) {
-                maxValue = number;
+        for (int i = 0; i < length; i++) {
+            if (values[i].doubleValue() > maxValue.doubleValue()) {
+                maxValue = values[i];
             }
         }
         return maxValue;
+    }
+
+    public void print() {
+        System.out.println("Максимальный размер: " + size + ", текущий размер: " + length);
+        try {
+            for (int i=0; i < length; i++) {
+                if (i > 0) System.out.print(", ");
+                System.out.print(this.get(i));
+            }
+        }
+        catch (NumBoxOutOfBoundsException exOutOfBounds) {
+            System.out.println(exOutOfBounds.getMessage());
+        }
+        System.out.println();
+        try {
+            System.out.println("Максимальный элемент: " + max());
+            System.out.println("Сумма всех элементов: " + sum());
+        }
+        catch (NumBoxIsEmptyException exBoxEmpty) {
+            System.out.println(exBoxEmpty.getMessage());
+        }
+        try {
+            System.out.println("Среднее значение: " + average());
+        }
+        catch (NumBoxIsEmptyException exBoxEmpty) {
+            System.out.println(exBoxEmpty.getMessage());
+        }
     }
 }

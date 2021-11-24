@@ -4,65 +4,61 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        NumBox<Integer> numbersInteger = new NumBox<>(3);
-        NumBox<Float> numbersFloat = new NumBox<>(4);
-        Random rand = new Random();
+        int integerCount = 3;
+        int floatCount = 5;
+        NumBox<Integer> numbersInteger = new NumBox<>(integerCount);
+        NumBox<Float> numbersFloat = new NumBox<>(floatCount);
+        int maxIntValue = 10;
+        float maxFloatValue = 10.0f;
+        Random random = new Random();
 
+        System.out.println("Максимальное значение пустого массива:");
         try {
-            numbersInteger.add(randomInteger(rand, 10));
-            numbersInteger.add(randomInteger(rand, 10));
-            numbersInteger.add(randomInteger(rand, 10));
-            numbersInteger.add(randomInteger(rand, 10));
+            System.out.println(numbersInteger.max());
+        }
+        catch (NumBoxIsEmptyException exBoxEmpty) {
+            System.out.println(exBoxEmpty.getMessage());
+        }
+        System.out.println("Среднее значение пустого массива:");
+        try {
+            System.out.println(numbersFloat.average());
+        }
+        catch (NumBoxIsEmptyException exBoxEmpty) {
+            System.out.println(exBoxEmpty.getMessage());
+        }
+
+        System.out.println();
+        try {
+            while (true) {
+                numbersInteger.add(random.nextInt(maxIntValue + 1));
+            }
         }
         catch (NumBoxOutOfSizeException exOutOfSize) {
-            System.out.println(exOutOfSize);
+            System.out.println(exOutOfSize.getMessage());
         }
         System.out.println("Массив чисел типа Integer:");
-        for (int i=0; i < numbersInteger.length(); i++) {
-            if (i > 0) System.out.print(", ");
-            System.out.print(numbersInteger.get(i));
-        }
-        System.out.println();
-        System.out.println("Максимальный элемент: " + numbersInteger.max());
-        System.out.println("Сумма всех элементов: " + numbersInteger.sum());
-        try {
-            System.out.println("Среднее значение: " + numbersInteger.average());
-        }
-        catch (NumBoxIsEmptyException exBoxEmpty) {
-            System.out.println(exBoxEmpty);
-        }
+        numbersInteger.print();
 
+        System.out.println();
         try {
-            numbersFloat.add(randomFloat(rand, 10.0f));
-            numbersFloat.add(randomFloat(rand, 10.0f));
-            numbersFloat.add(randomFloat(rand, 10.0f));
-            numbersFloat.add(randomFloat(rand, 10.0f));
-            numbersFloat.add(randomFloat(rand, 10.0f));
+            for (int i=0; i < floatCount - 2; i++) {
+                numbersFloat.add(random.nextFloat() * maxFloatValue);
+            }
         }
         catch (NumBoxOutOfSizeException exOutOfSize) {
-            System.out.println(exOutOfSize);
+            System.out.println(exOutOfSize.getMessage());
         }
         System.out.println("Массив чисел типа Float:");
-        for (int i=0; i < numbersFloat.length(); i++) {
-            if (i > 0) System.out.print(", ");
-            System.out.print(numbersFloat.get(i));
-        }
+        numbersFloat.print();
+
         System.out.println();
-        System.out.println("Максимальный элемент: " + numbersFloat.max());
-        System.out.println("Сумма всех элементов: " + numbersFloat.sum());
+        int indexOutOfBounds = numbersFloat.length();
+        System.out.println("Элемент Float по индексу: " + indexOutOfBounds);
         try {
-            System.out.println("Среднее значение: " + numbersFloat.average());
+            numbersFloat.get(indexOutOfBounds);
         }
-        catch (NumBoxIsEmptyException exBoxEmpty) {
-            System.out.println(exBoxEmpty);
+        catch (NumBoxOutOfBoundsException exOutBounds) {
+            System.out.println(exOutBounds.getMessage());
         }
-    }
-
-    public static Integer randomInteger(Random random, int maxValue) {
-        return random.nextInt(maxValue + 1);
-    }
-
-    public static Float randomFloat(Random random, Float dispersion) {
-        return random.nextFloat() * dispersion;
     }
 }
