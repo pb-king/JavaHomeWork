@@ -3,13 +3,8 @@ package com.pb.korol.hw11;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 // задача еще не готова полностью, извините
 
@@ -18,7 +13,8 @@ public class ContactBook {
         ObjectMapper objectMapper = new ObjectMapper();
         Contact contact = new Contact("Dude", "01.01.2000", "some street");
         Contact contact2 = new Contact("Chick", "02.02.2002", "next street");
-
+        int choice;
+        /*
         ContactList contacts = new ContactList();
         contacts.add(contact);
         contacts.add(contact2);
@@ -29,12 +25,50 @@ public class ContactBook {
         ContactList contacts2 = objectMapper.readValue(result, ContactList.class);
         contacts2.print();
         System.out.println();
+        */
+        do {
+            choice = getMainMenuChoise();
 
-        ContactBook.showMenu();
+            switch (choice) {
+                case 0: addContact();
+                    break;
+                default:
+                    System.out.println("Неизвестный код меню!");
+            }
+            System.out.println("Вы выбрали вариант: " + choice);
+        }
+        while (choice == 0);
     }
 
-    public static void showMenu() {
-        System.out.println("меню");
+    public static int getMainMenuChoise() {
+        Scanner console = new Scanner(System.in);
+        String choice;
+        String[] menuList = {
+                "1 - добавить контакт",
+                "2 - найти контакт",
+                "3 - вывести все контакты",
+                "4 - сохранить контакты в файл",
+                "5 - загрузить контакты из файла",
+                "0 - завершить работу"
+        };
+        ArrayList<String> possibleChoices = new ArrayList<>();
+
+        System.out.println("Выберите действие из списка (введите цифру):");
+        for (String menuItem: menuList) {
+            System.out.println(menuItem);
+            possibleChoices.add(menuItem.substring(0, 1));
+        }
+
+        do {
+            choice = console.nextLine();
+        }
+        while (!possibleChoices.contains(choice));
+
+        return Integer.parseInt(choice);
     }
 
+    public static void addContact() {
+        Scanner console = new Scanner(System.in);
+
+    }
 }
