@@ -11,10 +11,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
-
-// задача еще не готова полностью, извините
 
 public class ContactBook {
     public static void main(String[] args) throws JsonProcessingException {
@@ -47,7 +44,10 @@ public class ContactBook {
                     break;
                 case 4: saveContactsToFile(contacts, filePath, objectMapper);
                     break;
-                case 5: loadContactsFromFile(contacts, filePath, objectMapper);
+                case 5: ContactList tempContactList = loadContactsFromFile(filePath, objectMapper);
+                    if (tempContactList != null) {
+                        contacts = tempContactList;
+                    }
                     break;
                 default:
                     System.out.println("Неизвестный код меню!");
@@ -89,9 +89,9 @@ public class ContactBook {
         do {
             String phone = titledScan(console, "Введите номер телефона:");
             contact.addPhone(phone);
-            choice = titledScan(console, "Чтобы добавить еще номер, нажмите Y, иначе - контакт готов");
+            choice = titledScan(console, "Чтобы добавить еще номер, введите +, иначе - контакт готов");
         }
-        while(choice.equalsIgnoreCase("Y"));
+        while(choice.equals("+"));
         contacts.add(contact);
     }
 
@@ -112,7 +112,6 @@ public class ContactBook {
     public static void saveContactsToFile(ContactList contacts, String filePath, ObjectMapper mapper) throws JsonProcessingException {
         String jsonAsString = mapper.writeValueAsString(contacts);
         Path path = Paths.get(filePath);
-        System.out.println(jsonAsString);
 
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
             writer.write(jsonAsString);
@@ -122,13 +121,15 @@ public class ContactBook {
         System.out.println("Контакты успешно записаны в файл " + filePath + ".");
     }
 
-    public static void loadContactsFromFile(ContactList contacts, String filePath, ObjectMapper mapper) {
+    public static ContactList loadContactsFromFile(String filePath, ObjectMapper mapper) {
         Path path = Paths.get(filePath);
+        ContactList result = null;
 
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String jsonString = reader.readLine();
+            System.out.println(jsonString);
             if (jsonString != null) {
-                contacts = mapper.readValue(jsonString, ContactList.class);
+                result = mapper.readValue(jsonString, ContactList.class);
                 System.out.println("Контакты успешно загружены из файла: " + filePath);
             }
             else {
@@ -139,5 +140,6 @@ public class ContactBook {
         } catch (IOException exRead) {
             System.out.println("Ошибка чтения контактов из файла " + filePath + ": " + exRead);
         }
+        return result;
     }
 }
