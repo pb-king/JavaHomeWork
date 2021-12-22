@@ -1,12 +1,17 @@
 package com.pb.korol.hw11;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ContactList {
     private ArrayList<Contact> list;
 
     ContactList() {
         this.list = new ArrayList<>();
+    }
+
+    ContactList(ContactList anotherContactList) {
+        this.list = anotherContactList.getList();
     }
 
     public void add(Contact contact) {
@@ -39,15 +44,10 @@ public class ContactList {
     }
 
     public void print() {
-        if (list.size() == 0) {
-            System.out.println("Список контактов пуст");
-        }
-        else {
-            for (Contact contact: list) {
-                System.out.println();
-                System.out.println("Контакт № " + (list.indexOf(contact) + 1));
-                System.out.println(contact);
-            }
+        for (Contact contact: list) {
+            System.out.println();
+            System.out.println("Контакт № " + (list.indexOf(contact) + 1));
+            System.out.println(contact);
         }
     }
 
@@ -87,5 +87,50 @@ public class ContactList {
                 }
         }
         return null;
+    }
+
+    public void sort(String key) {
+        switch (key) {
+            case "name":
+                list.sort(new ContactByNameComparator());
+                break;
+            case "birth":
+                list.sort(new ContactByBirthComparator());
+                break;
+            case "address":
+                list.sort(new ContactByAddressComparator());
+                break;
+            case "datetime":
+                list.sort(new ContactByDateTimeComparator());
+                break;
+        }
+    }
+
+    public static class ContactByNameComparator implements Comparator<Contact> {
+        @Override
+        public int compare(Contact contact1, Contact contact2) {
+            return contact1.getFullName().compareTo(contact2.getFullName());
+        }
+    }
+
+    public static class ContactByBirthComparator implements Comparator<Contact> {
+        @Override
+        public int compare(Contact contact1, Contact contact2) {
+            return contact1.getBirthDate().compareTo(contact2.getBirthDate());
+        }
+    }
+
+    public static class ContactByAddressComparator implements Comparator<Contact> {
+        @Override
+        public int compare(Contact contact1, Contact contact2) {
+            return contact1.getAddress().compareTo(contact2.getAddress());
+        }
+    }
+
+    public static class ContactByDateTimeComparator implements Comparator<Contact> {
+        @Override
+        public int compare(Contact contact1, Contact contact2) {
+            return contact1.getChangeTime().compareTo(contact2.getChangeTime());
+        }
     }
 }

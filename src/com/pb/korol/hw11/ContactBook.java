@@ -162,12 +162,39 @@ public class ContactBook {
                 System.out.println("Неизвестный код меню контакта!");
         }
         System.out.println();
-
     }
 
     public static void showAllContacts(ContactList contacts) {
+        if (contacts.length() == 0) {
+            System.out.println("Список контактов пуст");
+            return;
+        }
+
+        String[] showListMenuText = {
+                "1 - вывести список контактов как есть",
+                "2 - вывести список контактов, сортированный по ФИО",
+                "3 - вывести список контактов, сортированный по дате рождения",
+                "4 - вывести список контактов, сортированный по адресу",
+                "5 - вывести список контактов, сортированный по дате изменения",
+                "0 - в главное меню"
+        };
+        int usersChoice = getMenuChoice(showListMenuText);
+        ContactList showList = new ContactList(contacts);
+        System.out.println();
+
+        switch (usersChoice) {
+            case 0: return;
+            case 1: break;
+            case 2: showList.sort("name"); break;
+            case 3: showList.sort("birth"); break;
+            case 4: showList.sort("address"); break;
+            case 5: showList.sort("datetime"); break;
+            default:
+                System.out.println("Неизвестный код меню списка контактов!");
+        }
+        System.out.println();
         System.out.println("Список контактов:");
-        contacts.print();
+        showList.print();
     }
 
     public static void editContact(Contact contact) {
