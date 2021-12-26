@@ -71,9 +71,9 @@ public class Contact {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         return "ФИО: " + fullName +
-               "\nДата рождения: " + birthDate +
-               "\nАдрес: " + address +
-               "\nПоследнее изменение: " + changeTime.format(formatter) +
-               "\nКонтактные номера: " + phoneNumbers;
+                "\nДата рождения: " + birthDate +
+                "\nАдрес: " + address +
+                "\nПоследнее изменение: " + changeTime.format(formatter) +
+                "\nКонтактные номера: " + phoneNumbers;
     }
 }

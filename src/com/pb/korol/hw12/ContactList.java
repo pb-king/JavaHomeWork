@@ -1,12 +1,17 @@
 package com.pb.korol.hw12;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ContactList {
     private ArrayList<Contact> list;
 
     ContactList() {
         this.list = new ArrayList<>();
+    }
+
+    ContactList(ContactList anotherContactList) {
+        this.list = anotherContactList.getList();
     }
 
     public void add(Contact contact) {
@@ -39,15 +44,10 @@ public class ContactList {
     }
 
     public void print() {
-        if (list.size() == 0) {
-            System.out.println("Список контактов пуст");
-        }
-        else {
-            for (Contact contact: list) {
-                System.out.println();
-                System.out.println("Контакт № " + (list.indexOf(contact) + 1));
-                System.out.println(contact);
-            }
+        for (Contact contact: list) {
+            System.out.println();
+            System.out.println("Контакт № " + (list.indexOf(contact) + 1));
+            System.out.println(contact);
         }
     }
 
@@ -87,5 +87,22 @@ public class ContactList {
                 }
         }
         return null;
+    }
+
+    public void sort(String key) {
+        switch (key) {
+            case "name":
+                list.sort(Comparator.comparing(Contact::getFullName));
+                break;
+            case "birth":
+                list.sort(Comparator.comparing(Contact::getBirthDate));
+                break;
+            case "address":
+                list.sort(Comparator.comparing(Contact::getAddress));
+                break;
+            case "datetime":
+                list.sort(Comparator.comparing(Contact::getChangeTime));
+                break;
+        }
     }
 }
